@@ -1,4 +1,4 @@
-package local
+package times
 
 import (
 	"database/sql/driver"
@@ -14,7 +14,7 @@ type LocalDate struct {
 	Day   int
 }
 
-// AsTime converts d into a specific time instance at midnight in zone.
+// AsTime converts d into a specific times instance at midnight in zone.
 func (d LocalDate) AsTime(zone *time.Location) time.Time {
 	return time.Date(d.Year, time.Month(d.Month), d.Day, 0, 0, 0, 0, zone)
 }

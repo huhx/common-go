@@ -1,4 +1,4 @@
-package local
+package times
 
 import (
 	"database/sql/driver"
