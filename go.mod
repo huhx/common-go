@@ -1,4 +1,4 @@
-module common-go
+module github.com/huhx/common-go
 
 go 1.22
 
