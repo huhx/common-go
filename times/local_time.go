@@ -58,6 +58,34 @@ func (d *LocalTime) UnmarshalText(b []byte) error {
 	return nil
 }
 
+func (lt LocalTime) Value() (driver.Value, error) {
+	t := time.Date(0, 1, 1, lt.Hour, lt.Minute, lt.Second, 0, time.UTC)
+	return t.Format("15:04:05"), nil
+}
+
+func (lt *LocalTime) Scan(value interface{}) error {
+	switch v := value.(type) {
+	case time.Time:
+		lt.Hour = v.Hour()
+		lt.Minute = v.Minute()
+		lt.Second = v.Second()
+		return nil
+	case string:
+		parsedTime, err := time.Parse("15:04:05", v)
+		if err != nil {
+			return err
+		}
+		lt.Hour = parsedTime.Hour()
+		lt.Minute = parsedTime.Minute()
+		lt.Second = parsedTime.Second()
+		return nil
+	case nil:
+		return nil
+	default:
+		return fmt.Errorf("cannot scan type %T into LocalTimeWrapper", value)
+	}
+}
+
 // parseLocalTime is a bit different because it also returns the remaining
 // []byte that is didn't need. This is to allow parseDateTime to parse those
 // remaining bytes as a timezone.
@@ -154,32 +182,4 @@ func parseLocalTime(b []byte) (LocalTime, []byte, error) {
 
 func isDigit(r byte) bool {
 	return r >= '0' && r <= '9'
-}
-
-func (lt LocalTime) Value() (driver.Value, error) {
-	t := time.Date(0, 1, 1, lt.Hour, lt.Minute, lt.Second, 0, time.UTC)
-	return t.Format("15:04:05"), nil
-}
-
-func (lt *LocalTime) Scan(value interface{}) error {
-	switch v := value.(type) {
-	case time.Time:
-		lt.Hour = v.Hour()
-		lt.Minute = v.Minute()
-		lt.Second = v.Second()
-		return nil
-	case string:
-		parsedTime, err := time.Parse("15:04:05", v)
-		if err != nil {
-			return err
-		}
-		lt.Hour = parsedTime.Hour()
-		lt.Minute = parsedTime.Minute()
-		lt.Second = parsedTime.Second()
-		return nil
-	case nil:
-		return nil
-	default:
-		return fmt.Errorf("cannot scan type %T into LocalTimeWrapper", value)
-	}
 }
