@@ -105,6 +105,10 @@ func LocalDateTimeNow() LocalDateTime {
 	return LocalDateTime{localDate, localTime}
 }
 
+func (ldt LocalDateTime) StartOfToday() LocalDateTime {
+	return LocalDateTime{ldt.LocalDate, NewZeroTime()}
+}
+
 func (ldt LocalDateTime) PassDays(dateTime LocalDateTime) int {
 	return int(ldt.AsTime(timezone).Sub(dateTime.AsTime(timezone)).Hours() / 24)
 }

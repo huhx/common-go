@@ -169,6 +169,7 @@ func (ldt LocalDate) ToSolar() LocalDate {
 	return DateFromYMD(solar.GetYear(), solar.GetMonth(), solar.GetDay())
 }
 
+// ToLunar todo：可以做优化，GetLunar方法里面计算了天干地支、节气之类的。我们这里不需要
 func (ldt LocalDate) ToLunar() LocalDate {
 	solar := calendar.NewSolarFromYmd(ldt.Year, ldt.Month, ldt.Day)
 	lunar := solar.GetLunar()

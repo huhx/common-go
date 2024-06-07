@@ -16,6 +16,16 @@ type LocalTime struct {
 	Precision  int // Number of digits to display for Nanosecond.
 }
 
+func NewZeroTime() LocalTime {
+	return LocalTime{
+		Hour:       0,
+		Minute:     0,
+		Second:     0,
+		Nanosecond: 0,
+		Precision:  0,
+	}
+}
+
 func (d LocalTime) String() string {
 	s := fmt.Sprintf("%02d:%02d:%02d", d.Hour, d.Minute, d.Second)
 
