@@ -14,6 +14,22 @@ type LocalDate struct {
 	Day   int
 }
 
+func DateFromYMD(year, month, day int) LocalDate {
+	return LocalDate{
+		Year:  year,
+		Month: month,
+		Day:   day,
+	}
+}
+
+func DateFromTime(t time.Time) LocalDate {
+	return LocalDate{
+		Year:  t.Year(),
+		Month: int(t.Month()),
+		Day:   t.Day(),
+	}
+}
+
 // AsTime converts d into a specific times instance at midnight in zone.
 func (d LocalDate) AsTime(zone *time.Location) time.Time {
 	return time.Date(d.Year, time.Month(d.Month), d.Day, 0, 0, 0, 0, zone)
@@ -140,11 +156,7 @@ func (ld *LocalDate) Scan(value interface{}) error {
 
 func LocalDateNow() LocalDate {
 	now := time.Now().In(timezone)
-	return LocalDate{
-		Year:  now.Year(),
-		Month: int(now.Month()),
-		Day:   now.Day(),
-	}
+	return DateFromTime(now)
 }
 
 func (ldt LocalDate) PassDays(date LocalDate) int {
@@ -154,57 +166,33 @@ func (ldt LocalDate) PassDays(date LocalDate) int {
 func (ldt LocalDate) ToSolar() LocalDate {
 	lunar := calendar.NewLunarFromYmd(ldt.Year, ldt.Month, ldt.Day)
 	solar := lunar.GetSolar()
-	return LocalDate{
-		Year:  solar.GetYear(),
-		Month: solar.GetMonth(),
-		Day:   solar.GetDay(),
-	}
+	return DateFromYMD(solar.GetYear(), solar.GetMonth(), solar.GetDay())
 }
 
 func (ldt LocalDate) ToLunar() LocalDate {
-	lunar := calendar.NewSolarFromYmd(ldt.Year, ldt.Month, ldt.Day)
-	solar := lunar.GetLunar()
-	return LocalDate{
-		Year:  solar.GetYear(),
-		Month: solar.GetMonth(),
-		Day:   solar.GetDay(),
-	}
+	solar := calendar.NewSolarFromYmd(ldt.Year, ldt.Month, ldt.Day)
+	lunar := solar.GetLunar()
+	return DateFromYMD(lunar.GetYear(), lunar.GetMonth(), lunar.GetDay())
 }
 
 func (ldt LocalDate) PlusYear(year int) LocalDate {
 	newTime := ldt.AsTime(timezone).AddDate(year, 0, 0)
-	return LocalDate{
-		Year:  newTime.Year(),
-		Month: int(newTime.Month()),
-		Day:   newTime.Day(),
-	}
+	return DateFromTime(newTime)
 }
 
 func (ldt LocalDate) PlusMonth(month int) LocalDate {
 	newTime := ldt.AsTime(timezone).AddDate(0, month, 0)
-	return LocalDate{
-		Year:  newTime.Year(),
-		Month: int(newTime.Month()),
-		Day:   newTime.Day(),
-	}
+	return DateFromTime(newTime)
 }
 
 func (ldt LocalDate) PlusWeeks(weeks int) LocalDate {
 	newTime := ldt.AsTime(timezone).AddDate(0, 0, 7*weeks)
-	return LocalDate{
-		Year:  newTime.Year(),
-		Month: int(newTime.Month()),
-		Day:   newTime.Day(),
-	}
+	return DateFromTime(newTime)
 }
 
 func (ldt LocalDate) PlusDays(days int) LocalDate {
 	newTime := ldt.AsTime(timezone).AddDate(0, 0, days)
-	return LocalDate{
-		Year:  newTime.Year(),
-		Month: int(newTime.Month()),
-		Day:   newTime.Day(),
-	}
+	return DateFromTime(newTime)
 }
 
 func (ldt LocalDate) Compare(date LocalDate) int {
@@ -224,9 +212,5 @@ func (ldt LocalDate) Equal(date LocalDate) bool {
 }
 
 func (ldt LocalDate) CopyYear(year int) LocalDate {
-	return LocalDate{
-		Year:  year,
-		Month: ldt.Month,
-		Day:   ldt.Day,
-	}
+	return DateFromYMD(year, ldt.Month, ldt.Day)
 }

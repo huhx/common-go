@@ -101,11 +101,7 @@ func LocalDateTimeNow() LocalDateTime {
 		Second:     now.Second(),
 		Nanosecond: now.Nanosecond(),
 	}
-	localDate := LocalDate{
-		Year:  now.Year(),
-		Month: int(now.Month()),
-		Day:   now.Day(),
-	}
+	localDate := DateFromTime(now)
 	return LocalDateTime{localDate, localTime}
 }
 
