@@ -6,6 +6,8 @@ import (
 	"github.com/goccy/go-json"
 )
 
+// StringArray represents an array of strings
+// swagger:model
 type StringArray []string
 
 func NewStringArray(element string) *StringArray {

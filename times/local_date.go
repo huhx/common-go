@@ -8,8 +8,6 @@ import (
 	"time"
 )
 
-// LocalDate
-// @swaggotype string
 type LocalDate struct {
 	Year  int
 	Month int

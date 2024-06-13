@@ -9,8 +9,6 @@ import (
 
 var timezone = time.Local
 
-// LocalDateTime
-// @swaggotype string
 type LocalDateTime struct {
 	LocalDate
 	LocalTime
