@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+// LocalTime
+// @swaggotype string
 type LocalTime struct {
 	Hour       int // Hour of the day: [0; 24[
 	Minute     int // Minute of the hour: [0; 60[
