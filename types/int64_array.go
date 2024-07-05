@@ -6,8 +6,6 @@ import (
 	"github.com/goccy/go-json"
 )
 
-// Int64Array represents an array of int64 values
-// swagger:model
 type Int64Array []int64
 
 func (a Int64Array) Value() (driver.Value, error) {
