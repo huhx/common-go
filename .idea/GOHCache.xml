@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GoORMHelperCache">
+    <option name="schemaMapping">
+      <map>
+        <entry key="BadRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/exception/bad_request_exception.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="HttpClient">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/client/http_client.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="LocalDate">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/times/local_date.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="LocalDateTime">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/times/local_date_time.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="LocalTime">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/times/local_time.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Logger">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/logger/logger.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="NotFound">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/exception/not_found_exception.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Response">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/client/response.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="System">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/exception/system_exception.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Unauthenticated">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/exception/unauthenticated_exception.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Validation">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/exception/validation_exception.go" />
+            </set>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="scannedPathMapping">
+      <map>
+        <entry key="file://$PROJECT_DIR$/client/http_client.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1734219966091" />
+              <option name="schema">
+                <list>
+                  <option value="HttpClient" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/client/response.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1734219966091" />
+              <option name="schema">
+                <list>
+                  <option value="Response" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/exception/bad_request_exception.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1734219966091" />
+              <option name="schema">
+                <list>
+                  <option value="BadRequest" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/exception/base_exception.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1734219966092" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/exception/not_found_exception.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1734219966092" />
+              <option name="schema">
+                <list>
+                  <option value="NotFound" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/exception/system_exception.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1734219966092" />
+              <option name="schema">
+                <list>
+                  <option value="System" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/exception/unauthenticated_exception.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1734219966092" />
+              <option name="schema">
+                <list>
+                  <option value="Unauthenticated" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/exception/validation_exception.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1734219966092" />
+              <option name="schema">
+                <list>
+                  <option value="Validation" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/logger/logger.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1734219966093" />
+              <option name="schema">
+                <list>
+                  <option value="Logger" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/snowflake/id_generator.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1734219966093" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/times/local_date.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1734219966093" />
+              <option name="schema">
+                <list>
+                  <option value="LocalDate" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/times/local_date_time.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1734219966094" />
+              <option name="schema">
+                <list>
+                  <option value="LocalDateTime" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/times/local_time.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1734219966094" />
+              <option name="schema">
+                <list>
+                  <option value="LocalTime" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/types/int64_array.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1734219966094" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/types/jsonb.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1734220074833" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/types/string_array.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1734219966094" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/util/string.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1734219966095" />
+            </ScannedPath>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="tableStructMapping">
+      <map>
+        <entry key="bad_request" value="BadRequest" />
+        <entry key="http_client" value="HttpClient" />
+        <entry key="local_date" value="LocalDate" />
+        <entry key="local_date_time" value="LocalDateTime" />
+        <entry key="local_time" value="LocalTime" />
+        <entry key="logger" value="Logger" />
+        <entry key="not_found" value="NotFound" />
+        <entry key="response" value="Response" />
+        <entry key="system" value="System" />
+        <entry key="unauthenticated" value="Unauthenticated" />
+        <entry key="validation" value="Validation" />
+      </map>
+    </option>
+    <option name="lastTimeChecked" value="1734219972182" />
+  </component>
+</project>
