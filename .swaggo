@@ -1,0 +1,6 @@
+// Replace all NullInt64 with int
+replace times.LocalDateTime string
+replace times.LocalDate string
+replace types.Int64Array []int64
+replace types.StringArray []string
+replace types.JSONB map[string]interface{}
