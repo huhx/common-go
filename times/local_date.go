@@ -201,6 +201,7 @@ func daysIn(m int, year int) int {
 func isLeap(year int) bool {
 	return year%4 == 0 && (year%100 != 0 || year%400 == 0)
 }
+
 func parseDecimalDigits(b []byte) (int, error) {
 	v := 0
 
