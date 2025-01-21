@@ -16,14 +16,20 @@ type LocalDateTime struct {
 
 func LocalDateTimeNow() LocalDateTime {
 	now := time.Now().In(timezone)
-	localTime := LocalTime{
-		Hour:       now.Hour(),
-		Minute:     now.Minute(),
-		Second:     now.Second(),
-		Nanosecond: now.Nanosecond(),
+	return DateTimeFromTime(now)
+}
+
+func DateTimeFromTime(datetime time.Time) LocalDateTime {
+	return LocalDateTime{DateFromTime(datetime), localTimeFromTime(datetime)}
+}
+
+func DateTimeFromString(datetimeString string, pattern string) (*LocalDateTime, error) {
+	if datetime, err := time.Parse(pattern, datetimeString); err != nil {
+		return nil, err
+	} else {
+		fromTime := DateTimeFromTime(datetime)
+		return &fromTime, nil
 	}
-	localDate := DateFromTime(now)
-	return LocalDateTime{localDate, localTime}
 }
 
 func (ldt LocalDateTime) StartOfToday() LocalDateTime {

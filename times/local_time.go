@@ -16,6 +16,15 @@ type LocalTime struct {
 	Precision  int // Number of digits to display for Nanosecond.
 }
 
+func localTimeFromTime(t time.Time) LocalTime {
+	return LocalTime{
+		Hour:       t.Hour(),
+		Minute:     t.Minute(),
+		Second:     t.Second(),
+		Nanosecond: t.Nanosecond(),
+	}
+}
+
 func NewZeroTime() LocalTime {
 	return LocalTime{
 		Hour:       0,
