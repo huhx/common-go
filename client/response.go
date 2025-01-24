@@ -17,6 +17,14 @@ func (r Response) IsSuccess() bool {
 	return r.StatusCode >= 200 && r.StatusCode <= 299
 }
 
+func (r Response) IsClientError() bool {
+	return r.StatusCode >= 400 && r.StatusCode <= 499
+}
+
+func (r Response) IsServerError() bool {
+	return r.StatusCode >= 500 && r.StatusCode <= 599
+}
+
 func (r Response) StringBody() string {
 	return string(r.Body)
 }

@@ -67,3 +67,32 @@ func TestLocalDate_ToSolar(t *testing.T) {
 		})
 	}
 }
+
+func TestLocalDate_ToLunar(t *testing.T) {
+	type fields struct {
+		Year  int
+		Month int
+		Day   int
+	}
+	tests := []struct {
+		name   string
+		fields fields
+		want   LocalDate
+	}{
+		{
+			name:   "test the to lunar conversion",
+			fields: fields{2024, 10, 24},
+			want:   LocalDate{2024, 9, 22},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ldt := LocalDate{
+				Year:  tt.fields.Year,
+				Month: tt.fields.Month,
+				Day:   tt.fields.Day,
+			}
+			assert.Equalf(t, tt.want, ldt.ToLunar(), "ToLunar()")
+		})
+	}
+}

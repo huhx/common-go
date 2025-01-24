@@ -45,7 +45,6 @@ func (c *HttpClient) Post(url string, payload interface{}, header http.Header) (
 	}
 	defer resp.Body.Close()
 
-	// 读取响应体
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println("Error reading response body:", err)
