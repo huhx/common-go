@@ -44,6 +44,15 @@ func LocalDateNow() LocalDate {
 	return DateFromTime(now)
 }
 
+func (ldt LocalDate) Age() int {
+	now := LocalDateNow()
+	age := now.Year - ldt.Year
+	if now.Month < ldt.Month || (now.Month == ldt.Month && now.Day < ldt.Day) {
+		age--
+	}
+	return age
+}
+
 func (ldt LocalDate) PassDays(date LocalDate) int {
 	return int(ldt.AsTime(timezone).Sub(date.AsTime(timezone)).Hours() / 24)
 }
