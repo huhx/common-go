@@ -1,6 +1,9 @@
 package base
 
-import "github.com/huhx/common-go/util"
+import (
+	"fmt"
+	"github.com/huhx/common-go/util"
+)
 
 type Pageable struct {
 	PageIndex int `json:"pageIndex" example:"0"`
@@ -17,4 +20,8 @@ func (p Pageable) Limit() int {
 
 func (p Pageable) Offset() int {
 	return p.PageIndex * p.PageSize
+}
+
+func (p Pageable) String() string {
+	return fmt.Sprintf("PageIndex: %d, PageSize: %d", p.PageIndex, p.PageSize)
 }
