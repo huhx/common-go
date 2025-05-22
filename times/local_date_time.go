@@ -32,6 +32,15 @@ func DateTimeFromString(datetimeString string, pattern string) (*LocalDateTime, 
 	}
 }
 
+func DateTimeFromDefaultString(datetimeString string) (*LocalDateTime, error) {
+	if datetime, err := time.Parse(time.DateTime, datetimeString); err != nil {
+		return nil, err
+	} else {
+		fromTime := DateTimeFromTime(datetime)
+		return &fromTime, nil
+	}
+}
+
 func (ldt LocalDateTime) StartOfToday() LocalDateTime {
 	return LocalDateTime{ldt.LocalDate, NewZeroTime()}
 }

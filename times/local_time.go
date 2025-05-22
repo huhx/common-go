@@ -25,6 +25,24 @@ func localTimeFromTime(t time.Time) LocalTime {
 	}
 }
 
+func TimeFromString(timeString string, pattern string) (*LocalTime, error) {
+	if datetime, err := time.Parse(pattern, timeString); err != nil {
+		return nil, err
+	} else {
+		fromTime := localTimeFromTime(datetime)
+		return &fromTime, nil
+	}
+}
+
+func TimeFromDefaultString(timeString string) (*LocalTime, error) {
+	if datetime, err := time.Parse(time.TimeOnly, timeString); err != nil {
+		return nil, err
+	} else {
+		fromTime := localTimeFromTime(datetime)
+		return &fromTime, nil
+	}
+}
+
 func NewZeroTime() LocalTime {
 	return LocalTime{
 		Hour:       0,

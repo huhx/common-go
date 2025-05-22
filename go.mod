@@ -3,7 +3,7 @@ module github.com/huhx/common-go
 go 1.23.4
 
 require (
-	github.com/6tail/lunar-go v1.4.2
+	github.com/6tail/lunar-go v1.4.3
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/goccy/go-json v0.10.5
 	github.com/stretchr/testify v1.10.0

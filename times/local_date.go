@@ -39,6 +39,15 @@ func DateFromString(dateString string, pattern string) (*LocalDate, error) {
 	}
 }
 
+func DateFromDefaultPattern(dateString string) (*LocalDate, error) {
+	if date, err := time.Parse(time.DateOnly, dateString); err != nil {
+		return nil, err
+	} else {
+		fromTime := DateFromTime(date)
+		return &fromTime, nil
+	}
+}
+
 func LocalDateNow() LocalDate {
 	now := time.Now().In(timezone)
 	return DateFromTime(now)
