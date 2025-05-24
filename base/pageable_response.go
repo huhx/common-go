@@ -1,11 +1,11 @@
 package base
 
 type PageableResponse[T any] struct {
-	Data      []T   `json:"data"`      // 当前页的数据列表，使用泛型类型 T
-	Total     int64 `json:"total"`     // 总记录数
-	TotalPage int64 `json:"totalPage"` // 总页数
-	PageIndex int   `json:"pageIndex"` // 当前页码
-	PageSize  int   `json:"pageSize"`  // 每页记录数
+	Data      []T   `json:"data"`
+	Total     int64 `json:"total"`
+	TotalPage int64 `json:"totalPage"`
+	PageIndex int   `json:"pageIndex"`
+	PageSize  int   `json:"pageSize"`
 }
 
 func EmptyPageableResponse[T any]() PageableResponse[T] {
@@ -20,6 +20,18 @@ func NewPageableResponse[T any](data []T, total int64, page Pageable) PageableRe
 		PageIndex: page.PageIndex,
 		PageSize:  page.PageSize,
 	}
+}
+
+func (resp PageableResponse[T]) HasNext() bool {
+	return int64(resp.PageIndex)+1 < resp.TotalPage
+}
+
+func (resp PageableResponse[T]) HasPrevious() bool {
+	return resp.PageIndex > 0
+}
+
+func (resp PageableResponse[T]) NextPage() Pageable {
+	return Pageable{resp.PageIndex + 1, resp.PageSize}
 }
 
 func (resp PageableResponse[T]) IsFirst() bool {

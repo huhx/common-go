@@ -6,9 +6,12 @@ import (
 	"fmt"
 	"github.com/goccy/go-json"
 	"io"
+	"log"
 	"net/http"
 	"net/url"
 )
+
+const limitReadSize = 10 * 1024 * 1024
 
 type HttpClient struct {
 	http.Client
@@ -26,29 +29,41 @@ func NewTLSHttpClient() HttpClient {
 }
 
 func (c *HttpClient) Get(baseUrl string, params map[string]string, header http.Header) (*Response, error) {
-	values := url.Values{}
-	for key, value := range params {
-		values.Add(key, value)
-	}
-
-	fullURL := baseUrl + "?" + values.Encode()
-	req, err := http.NewRequest("GET", fullURL, nil)
+	u, err := url.Parse(baseUrl)
 	if err != nil {
-		fmt.Println("Error creating request:", err)
+		log.Printf("Error Parse url: %v", err)
 		return nil, err
 	}
-	req.Header = header
+	values := u.Query()
+	for key, value := range params {
+		values.Set(key, value)
+	}
+	u.RawQuery = values.Encode()
 
+	req, err := http.NewRequest("GET", u.String(), nil)
+	if err != nil {
+		log.Printf("Error creating request: %v", err)
+		return nil, err
+	}
+
+	if header != nil {
+		for k, vs := range header {
+			for _, v := range vs {
+				req.Header.Add(k, v)
+			}
+		}
+	}
 	resp, err := c.Client.Do(req)
 	if err != nil {
-		fmt.Println("Error sending request:", err)
+		log.Printf("Error sending request: %v", err)
 		return nil, err
 	}
 	defer resp.Body.Close()
 
-	body, err := io.ReadAll(resp.Body)
+	limitReader := io.LimitReader(resp.Body, limitReadSize)
+	body, err := io.ReadAll(limitReader)
 	if err != nil {
-		fmt.Println("Error reading response body:", err)
+		log.Printf("Error reading response body: %v", err)
 		return nil, err
 	}
 
@@ -72,8 +87,13 @@ func (c *HttpClient) Post(baseUrl string, payload interface{}, header http.Heade
 		fmt.Println("Error creating request:", err)
 		return nil, err
 	}
-	req.Header = header
-
+	if header != nil {
+		for k, vs := range header {
+			for _, v := range vs {
+				req.Header.Add(k, v)
+			}
+		}
+	}
 	resp, err := c.Client.Do(req)
 	if err != nil {
 		fmt.Println("Error sending request:", err)
@@ -81,7 +101,8 @@ func (c *HttpClient) Post(baseUrl string, payload interface{}, header http.Heade
 	}
 	defer resp.Body.Close()
 
-	body, err := io.ReadAll(resp.Body)
+	limitReader := io.LimitReader(resp.Body, limitReadSize)
+	body, err := io.ReadAll(limitReader)
 	if err != nil {
 		fmt.Println("Error reading response body:", err)
 		return nil, err
@@ -107,8 +128,13 @@ func (c *HttpClient) Put(urlPath string, payload interface{}, header http.Header
 		fmt.Println("Error creating request:", err)
 		return nil, err
 	}
-	req.Header = header
-
+	if header != nil {
+		for k, vs := range header {
+			for _, v := range vs {
+				req.Header.Add(k, v)
+			}
+		}
+	}
 	resp, err := c.Client.Do(req)
 	if err != nil {
 		fmt.Println("Error sending request:", err)
@@ -116,7 +142,8 @@ func (c *HttpClient) Put(urlPath string, payload interface{}, header http.Header
 	}
 	defer resp.Body.Close()
 
-	body, err := io.ReadAll(resp.Body)
+	limitReader := io.LimitReader(resp.Body, limitReadSize)
+	body, err := io.ReadAll(limitReader)
 	if err != nil {
 		fmt.Println("Error reading response body:", err)
 		return nil, err
@@ -136,7 +163,13 @@ func (c *HttpClient) Delete(urlPath string, header http.Header) (*Response, erro
 		fmt.Println("Error creating request:", err)
 		return nil, err
 	}
-	req.Header = header
+	if header != nil {
+		for k, vs := range header {
+			for _, v := range vs {
+				req.Header.Add(k, v)
+			}
+		}
+	}
 
 	resp, err := c.Client.Do(req)
 	if err != nil {
@@ -145,7 +178,8 @@ func (c *HttpClient) Delete(urlPath string, header http.Header) (*Response, erro
 	}
 	defer resp.Body.Close()
 
-	body, err := io.ReadAll(resp.Body)
+	limitReader := io.LimitReader(resp.Body, limitReadSize)
+	body, err := io.ReadAll(limitReader)
 	if err != nil {
 		fmt.Println("Error reading response body:", err)
 		return nil, err
