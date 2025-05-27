@@ -10,8 +10,8 @@ import (
 var timezone = time.Local
 
 type LocalDateTime struct {
-	LocalDate
-	LocalTime
+	date LocalDate
+	time LocalTime
 }
 
 func LocalDateTimeNow() LocalDateTime {
@@ -42,7 +42,7 @@ func DateTimeFromDefaultString(datetimeString string) (*LocalDateTime, error) {
 }
 
 func (ldt LocalDateTime) StartOfToday() LocalDateTime {
-	return LocalDateTime{ldt.LocalDate, NewZeroTime()}
+	return LocalDateTime{ldt.date, NewZeroTime()}
 }
 
 func (ldt LocalDateTime) PassDays(dateTime LocalDateTime) int {
@@ -50,33 +50,33 @@ func (ldt LocalDateTime) PassDays(dateTime LocalDateTime) int {
 }
 
 func (ldt LocalDateTime) ToSolar() LocalDateTime {
-	localDate := ldt.LocalDate.ToSolar()
-	return LocalDateTime{localDate, ldt.LocalTime}
+	localDate := ldt.date.ToSolar()
+	return LocalDateTime{localDate, ldt.time}
 }
 
 func (ldt LocalDateTime) ToLunar() LocalDateTime {
-	localDate := ldt.LocalDate.ToLunar()
-	return LocalDateTime{localDate, ldt.LocalTime}
+	localDate := ldt.date.ToLunar()
+	return LocalDateTime{localDate, ldt.time}
 }
 
 func (ldt LocalDateTime) PlusYears(year int) LocalDateTime {
-	localDate := ldt.LocalDate.PlusYear(year)
-	return LocalDateTime{localDate, ldt.LocalTime}
+	localDate := ldt.date.PlusYear(year)
+	return LocalDateTime{localDate, ldt.time}
 }
 
 func (ldt LocalDateTime) PlusMonths(month int) LocalDateTime {
-	localDate := ldt.LocalDate.PlusMonth(month)
-	return LocalDateTime{localDate, ldt.LocalTime}
+	localDate := ldt.date.PlusMonth(month)
+	return LocalDateTime{localDate, ldt.time}
 }
 
 func (ldt LocalDateTime) PlusWeeks(weeks int) LocalDateTime {
-	localDate := ldt.LocalDate.PlusWeeks(weeks)
-	return LocalDateTime{localDate, ldt.LocalTime}
+	localDate := ldt.date.PlusWeeks(weeks)
+	return LocalDateTime{localDate, ldt.time}
 }
 
 func (ldt LocalDateTime) PlusDays(days int) LocalDateTime {
-	localDate := ldt.LocalDate.PlusDays(days)
-	return LocalDateTime{localDate, ldt.LocalTime}
+	localDate := ldt.date.PlusDays(days)
+	return LocalDateTime{localDate, ldt.time}
 }
 
 func (ldt LocalDateTime) Compare(dateTim LocalDateTime) int {
@@ -96,11 +96,14 @@ func (ldt LocalDateTime) Equal(dateTim LocalDateTime) bool {
 }
 
 func (ldt LocalDateTime) AsTime(zone *time.Location) time.Time {
-	return time.Date(ldt.Year, time.Month(ldt.Month), ldt.Day, ldt.Hour, ldt.Minute, ldt.Second, ldt.Nanosecond, zone)
+	return time.Date(
+		ldt.date.Year, time.Month(ldt.date.Month), ldt.date.Day, ldt.time.Hour,
+		ldt.time.Minute, ldt.time.Second, ldt.time.Nanosecond, zone,
+	)
 }
 
 func (ldt LocalDateTime) String() string {
-	return ldt.LocalDate.String() + "T" + ldt.LocalTime.String()
+	return ldt.date.String() + "T" + ldt.time.String()
 }
 
 func (ldt LocalDateTime) MarshalText() ([]byte, error) {
@@ -121,51 +124,18 @@ func (ldt *LocalDateTime) UnmarshalText(data []byte) error {
 }
 
 func (ldt LocalDateTime) Value() (driver.Value, error) {
-	t := time.Date(ldt.Year, time.Month(ldt.Month), ldt.Day, ldt.Hour, ldt.Minute, ldt.Second, 0, time.UTC)
-	return t, nil
+	return ldt.AsTime(time.UTC), nil
 }
 
 func (ldt *LocalDateTime) Scan(value interface{}) error {
 	switch v := value.(type) {
 	case time.Time:
-		ldt.Year = v.Year()
-		ldt.Month = int(v.Month())
-		ldt.Day = v.Day()
-		ldt.Hour = v.Hour()
-		ldt.Minute = v.Minute()
-		ldt.Second = v.Second()
+		ldt.date = DateFromYMD(v.Year(), int(v.Month()), v.Day())
+		ldt.time = localTimeFromTime(v)
 		return nil
 	case nil:
 		return nil
 	default:
 		return fmt.Errorf("cannot scan type %T into LocalDateTimeWrapper", value)
 	}
-}
-
-func parseLocalDateTime(b []byte) (LocalDateTime, []byte, error) {
-	var dt LocalDateTime
-
-	const localDateTimeByteMinLen = 11
-	if len(b) < localDateTimeByteMinLen {
-		return dt, nil, errors.New(string(b) + "local datetimes are expected to have the format YYYY-MM-DDTHH:MM:SS[.NNNNNNNNN]")
-	}
-
-	date, err := parseLocalDate(b[:10])
-	if err != nil {
-		return dt, nil, err
-	}
-	dt.LocalDate = date
-
-	sep := b[10]
-	if sep != 'T' && sep != ' ' && sep != 't' {
-		return dt, nil, errors.New(string(b[10:11]) + "datetime separator is expected to be T or a space")
-	}
-
-	t, rest, err := parseLocalTime(b[11:])
-	if err != nil {
-		return dt, nil, err
-	}
-	dt.LocalTime = t
-
-	return dt, rest, nil
 }

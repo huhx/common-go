@@ -53,26 +53,7 @@ func (c *HttpClient) Get(baseUrl string, params map[string]string, header http.H
 			}
 		}
 	}
-	resp, err := c.Client.Do(req)
-	if err != nil {
-		log.Printf("Error sending request: %v", err)
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	limitReader := io.LimitReader(resp.Body, limitReadSize)
-	body, err := io.ReadAll(limitReader)
-	if err != nil {
-		log.Printf("Error reading response body: %v", err)
-		return nil, err
-	}
-
-	return &Response{
-		Status:     resp.Status,
-		StatusCode: resp.StatusCode,
-		Header:     resp.Header,
-		Body:       body,
-	}, nil
+	return c.execute(req)
 }
 
 func (c *HttpClient) Post(baseUrl string, payload interface{}, header http.Header) (*Response, error) {
@@ -94,26 +75,7 @@ func (c *HttpClient) Post(baseUrl string, payload interface{}, header http.Heade
 			}
 		}
 	}
-	resp, err := c.Client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	limitReader := io.LimitReader(resp.Body, limitReadSize)
-	body, err := io.ReadAll(limitReader)
-	if err != nil {
-		fmt.Println("Error reading response body:", err)
-		return nil, err
-	}
-
-	return &Response{
-		Status:     resp.Status,
-		StatusCode: resp.StatusCode,
-		Header:     resp.Header,
-		Body:       body,
-	}, nil
+	return c.execute(req)
 }
 
 func (c *HttpClient) Put(urlPath string, payload interface{}, header http.Header) (*Response, error) {
@@ -135,26 +97,28 @@ func (c *HttpClient) Put(urlPath string, payload interface{}, header http.Header
 			}
 		}
 	}
-	resp, err := c.Client.Do(req)
+	return c.execute(req)
+}
+
+func (c *HttpClient) Patch(urlPath string, payload interface{}, header http.Header) (*Response, error) {
+	payloadBytes, err := json.Marshal(payload)
 	if err != nil {
-		fmt.Println("Error sending request:", err)
+		fmt.Println("Error marshalling payload:", err)
 		return nil, err
 	}
-	defer resp.Body.Close()
-
-	limitReader := io.LimitReader(resp.Body, limitReadSize)
-	body, err := io.ReadAll(limitReader)
+	req, err := http.NewRequest("PATCH", urlPath, bytes.NewBuffer(payloadBytes))
 	if err != nil {
-		fmt.Println("Error reading response body:", err)
+		fmt.Println("Error creating request:", err)
 		return nil, err
 	}
-
-	return &Response{
-		Status:     resp.Status,
-		StatusCode: resp.StatusCode,
-		Header:     resp.Header,
-		Body:       body,
-	}, nil
+	if header != nil {
+		for k, vs := range header {
+			for _, v := range vs {
+				req.Header.Add(k, v)
+			}
+		}
+	}
+	return c.execute(req)
 }
 
 func (c *HttpClient) Delete(urlPath string, header http.Header) (*Response, error) {
@@ -171,6 +135,10 @@ func (c *HttpClient) Delete(urlPath string, header http.Header) (*Response, erro
 		}
 	}
 
+	return c.execute(req)
+}
+
+func (c *HttpClient) execute(req *http.Request) (*Response, error) {
 	resp, err := c.Client.Do(req)
 	if err != nil {
 		fmt.Println("Error sending request:", err)

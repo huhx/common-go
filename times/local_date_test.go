@@ -31,10 +31,10 @@ func TestDateFromString(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := DateFromString(tt.args.dateString, tt.args.pattern)
+			result, err := DateFromString(tt.args.dateString, tt.args.pattern)
 
 			assert.Equalf(t, tt.hasError, err != nil, "DateFromString(%v, %v)", tt.args.dateString, tt.args.pattern)
-			assert.Equalf(t, tt.want, got, "DateFromString(%v, %v)", tt.args.dateString, tt.args.pattern)
+			assert.Equalf(t, tt.want, result, "DateFromString(%v, %v)", tt.args.dateString, tt.args.pattern)
 		})
 	}
 }
