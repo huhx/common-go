@@ -61,8 +61,16 @@ func (ld LocalDate) Age() int {
 	return age
 }
 
+func (ld LocalDate) StartOfMonth() LocalDate {
+	return DateFromYMD(ld.Year, ld.Month, 1)
+}
+
+func (ld LocalDate) EndOfMonth() LocalDate {
+	return DateFromYMD(ld.Year, ld.Month, daysIn(ld.Month, ld.Year))
+}
+
 func (ld LocalDate) PassDays(date LocalDate) int {
-	return int(ld.AsTime(timezone).Sub(date.AsTime(timezone)).Hours() / 24)
+	return int(ld.AsTime(timezone).Sub(date.AsTime(timezone)) / (24 * time.Hour))
 }
 
 func (ld LocalDate) ToSolar() LocalDate {
