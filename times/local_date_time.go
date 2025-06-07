@@ -19,6 +19,14 @@ func LocalDateTimeNow() LocalDateTime {
 	return DateTimeFromTime(now)
 }
 
+func (ldt LocalDateTime) Date() LocalDate {
+	return ldt.date
+}
+
+func (ldt LocalDateTime) Time() LocalTime {
+	return ldt.time
+}
+
 func DateTimeFromTime(datetime time.Time) LocalDateTime {
 	return LocalDateTime{DateFromTime(datetime), localTimeFromTime(datetime)}
 }
@@ -47,6 +55,18 @@ func (ldt LocalDateTime) StartOfToday() LocalDateTime {
 
 func (ldt LocalDateTime) PassDays(dateTime LocalDateTime) int {
 	return int(ldt.AsTime(timezone).Sub(dateTime.AsTime(timezone)).Hours() / 24)
+}
+
+func (ldt LocalDateTime) PassHours(dateTime LocalDateTime) int {
+	return int(ldt.AsTime(timezone).Sub(dateTime.AsTime(timezone)).Hours())
+}
+
+func (ldt LocalDateTime) PassMinutes(dateTime LocalDateTime) int {
+	return int(ldt.AsTime(timezone).Sub(dateTime.AsTime(timezone)).Minutes())
+}
+
+func (ldt LocalDateTime) PassSeconds(dateTime LocalDateTime) int {
+	return int(ldt.AsTime(timezone).Sub(dateTime.AsTime(timezone)).Seconds())
 }
 
 func (ldt LocalDateTime) ToSolar() LocalDateTime {
