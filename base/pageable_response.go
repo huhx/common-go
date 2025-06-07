@@ -30,6 +30,9 @@ func (resp PageableResponse[T]) HasPrevious() bool {
 	return resp.PageIndex > 0
 }
 
+func (resp PageableResponse[T]) PreviousPage() Pageable {
+	return Pageable{resp.PageIndex - 1, resp.PageSize}
+}
 func (resp PageableResponse[T]) NextPage() Pageable {
 	return Pageable{resp.PageIndex + 1, resp.PageSize}
 }

@@ -40,7 +40,7 @@ func (c *HttpClient) Get(baseUrl string, params map[string]string, header http.H
 	}
 	u.RawQuery = values.Encode()
 
-	req, err := http.NewRequest("GET", u.String(), nil)
+	req, err := http.NewRequest(http.MethodGet, u.String(), nil)
 	if err != nil {
 		log.Printf("Error creating request: %v", err)
 		return nil, err
@@ -63,7 +63,7 @@ func (c *HttpClient) Post(baseUrl string, payload interface{}, header http.Heade
 		return nil, err
 	}
 
-	req, err := http.NewRequest("POST", baseUrl, bytes.NewBuffer(payloadBytes))
+	req, err := http.NewRequest(http.MethodPost, baseUrl, bytes.NewBuffer(payloadBytes))
 	if err != nil {
 		fmt.Println("Error creating request:", err)
 		return nil, err
@@ -85,7 +85,7 @@ func (c *HttpClient) Put(urlPath string, payload interface{}, header http.Header
 		return nil, err
 	}
 
-	req, err := http.NewRequest("PUT", urlPath, bytes.NewBuffer(payloadBytes))
+	req, err := http.NewRequest(http.MethodPut, urlPath, bytes.NewBuffer(payloadBytes))
 	if err != nil {
 		fmt.Println("Error creating request:", err)
 		return nil, err
@@ -106,7 +106,7 @@ func (c *HttpClient) Patch(urlPath string, payload interface{}, header http.Head
 		fmt.Println("Error marshalling payload:", err)
 		return nil, err
 	}
-	req, err := http.NewRequest("PATCH", urlPath, bytes.NewBuffer(payloadBytes))
+	req, err := http.NewRequest(http.MethodPatch, urlPath, bytes.NewBuffer(payloadBytes))
 	if err != nil {
 		fmt.Println("Error creating request:", err)
 		return nil, err
@@ -122,7 +122,7 @@ func (c *HttpClient) Patch(urlPath string, payload interface{}, header http.Head
 }
 
 func (c *HttpClient) Delete(urlPath string, header http.Header) (*Response, error) {
-	req, err := http.NewRequest("DELETE", urlPath, nil)
+	req, err := http.NewRequest(http.MethodDelete, urlPath, nil)
 	if err != nil {
 		fmt.Println("Error creating request:", err)
 		return nil, err
