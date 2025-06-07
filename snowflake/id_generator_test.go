@@ -11,3 +11,10 @@ func TestId(t *testing.T) {
 
 	assert.Truef(t, id2 > id1, "generate random incremented values")
 }
+
+func TestIdString(t *testing.T) {
+	id1 := IdString()
+	id2 := IdString()
+
+	assert.Truef(t, id2 > id1, "generate random incremented values")
+}
