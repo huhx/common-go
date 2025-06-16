@@ -49,6 +49,10 @@ func DateTimeFromDefaultString(datetimeString string) (*LocalDateTime, error) {
 	}
 }
 
+func (ldt LocalDateTime) Weekday() int {
+	return ldt.date.Weekday()
+}
+
 func (ldt LocalDateTime) StartOfToday() LocalDateTime {
 	return LocalDateTime{ldt.date, NewZeroTime()}
 }

@@ -47,6 +47,10 @@ func DateFromDefaultPattern(dateString string) (*LocalDate, error) {
 	}
 }
 
+func (ld LocalDate) Weekday() int {
+	return int(ld.AsTime(timezone).Weekday())
+}
+
 func LocalDateNow() LocalDate {
 	now := time.Now().In(timezone)
 	return DateFromTime(now)
