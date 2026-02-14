@@ -11,7 +11,7 @@ import (
 	"net/url"
 )
 
-const limitReadSize = 10 * 1024 * 1024
+const limitReadSize = 10 * 1024 * 1024 // 10M
 
 type HttpClient struct {
 	http.Client

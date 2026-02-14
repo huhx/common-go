@@ -1,13 +1,13 @@
 module github.com/huhx/common-go
 
-go 1.23.4
+go 1.26.0
 
 require (
-	github.com/6tail/lunar-go v1.4.3
+	github.com/6tail/lunar-go v1.4.6
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/goccy/go-json v0.10.5
-	github.com/stretchr/testify v1.10.0
-	go.uber.org/zap v1.27.0
+	github.com/stretchr/testify v1.11.1
+	go.uber.org/zap v1.27.1
 )
 
 require (
